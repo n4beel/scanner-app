@@ -5,7 +5,7 @@ import ErrorImg from './../../assets/images/error.png';
 import Avatar from './../../assets/images/avatar.png';
 
 const Main = () => {
-
+  // chart state
   const [chart, setChart] = React.useState({
     options: {
       chart: {
@@ -31,33 +31,161 @@ const Main = () => {
     ],
   })
 
+  // error message state
   const [errorMsg, setErrorMsg] = React.useState({
-    value: "Hello"
+    value: ""
   })
 
+  // feedback message state
   const [msg, setMsg] = React.useState({
-    value: "Employee Entry Admitted."
+    value: ""
   })
 
+  // Accept button text state
   const [entryText, setEntryText] = React.useState({
     value: "Accept Entry"
   })
 
+  // loading message visibility state
   const [isWaiting, setIsWaiting] = React.useState({
-    value: false
+    value: true
   })
 
-  const scan = {
+  // scan state
+  const [scan, setScan] = React.useState({
     score: 0.0,
     wearingGear: false,
-    isEmployee: false
-  }
-  const place = {
+    isEmployee: true
+  })
+
+  // place state
+  const [place, setPlace] = React.useState({
     maxCapacity: 35,
     maxScore: 0.0,
     employeeCount: 0,
     occupancyCount: 0
+  })
+
+  // avatar color state
+  const [avatarColor, setAvatarColor] = React.useState({
+    value: "gray"
+  })
+
+  // useEffect
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      apiCall();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const apiCall = () => {
+
+    // setting loading to false
+    setIsWaiting({
+      value: false
+    })
+
+    // validation if scan.score > place.maxScore
+    if (scan.score > place.maxScore) {
+      setErrorMsg({
+        value: "Score Over Range"
+      })
+      setAvatarColor({
+        value: 'red'
+      })
+      setEntryText({
+        value: "Deny Entry"
+      })
+    }
+
+    // validation if place.occupancyCount > place.maxCapacity
+    else if (place.occupancyCount > place.maxCapacity) {
+      setErrorMsg({
+        value: "Max Capacity Reached"
+      })
+      setAvatarColor({
+        value: 'red'
+      })
+      setEntryText({
+        value: "Deny Entry"
+      })
+    }
+
+    // if scan.wearingGear === false
+    else if (!scan.wearingGear) {
+      setErrorMsg({
+        value: "Not Wearing Gear"
+      })
+      setAvatarColor({
+        value: 'red'
+      })
+      setEntryText({
+        value: "Deny Entry"
+      })
+    }
+
+    // if all validations are passed
+    else {
+      setAvatarColor({
+        value: 'green'
+      })
+      setEntryText({
+        value: "Admit Entry"
+      })
+    }
+
   }
+
+  const handleEntry = () => {
+    if (!errorMsg.value) {
+      if (scan.isEmployee) {
+        setMsg({
+          value: "Employee Entry Admitted"
+        })
+
+      }
+      else {
+        setMsg({
+          value: "Occupant Entry Admitted"
+        })
+
+      }
+    }
+    else {
+      if (scan.isEmployee) {
+        setMsg({
+          value: "Employee Entry Denied"
+        })
+
+      }
+      else {
+        setMsg({
+          value: "Occupant Entry Denied"
+        })
+
+      }
+    }
+
+    // setting loading to false
+    setIsWaiting({
+      value: true
+    })
+
+    const timer = setTimeout(() => {
+      apiCall();
+    }, 2000);
+  }
+
+  const handleChange = e => {
+    //   setScan({
+    //     ...scan,
+    //     [e.target.name]: !scan[e.target.name]
+    //   })
+    //   console.log(scan[e.target.name])
+  }
+
   const scoreTrend = [];
   return (
     <div className="Main">
@@ -101,7 +229,7 @@ const Main = () => {
 
         }
         <div className="avatar">
-          <div className="img">
+          <div className={avatarColor.value}>
             <div className="img-cont">
               <img src={Avatar} alt="" />
             </div>
@@ -133,7 +261,7 @@ const Main = () => {
                         <div className="value">
                           <p>{scan.score}</p>
                           <div className="checkbox">
-                            <input type="checkbox" id="wearingGear" />
+                            <input name="wearingGear" type="checkbox" id="wearingGear" checked={scan.wearingGear} onChange={handleChange} />
                             <label htmlFor="wearingGear">
                               <svg viewBox="0,0,50,50">
                                 <path d="M5 30 L 20 45 L 45 5">
@@ -142,7 +270,7 @@ const Main = () => {
                             </label>
                           </div>
                           <div className="checkbox">
-                            <input type="checkbox" id="isEmployee" />
+                            <input name="isEmployee" type="checkbox" id="isEmployee" checked={scan.isEmployee} onChange={handleChange} />
                             <label htmlFor="isEmployee">
                               <svg viewBox="0,0,50,50">
                                 <path d="M5 30 L 20 45 L 45 5">
@@ -155,7 +283,7 @@ const Main = () => {
                     </div>
                     <div className="buttons">
                       <div>
-                        <button>{entryText.value}</button>
+                        <button onClick={handleEntry}>{entryText.value}</button>
                       </div>
                       <div>
                         <button>Admit Exit</button>

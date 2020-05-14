@@ -43,7 +43,7 @@
         justify-content: center;
         p {
           font-size: 32px;
-          color: red;
+          color: #c02f28;
         }
       }
     }
@@ -54,12 +54,11 @@
       justify-content: center;
       align-items: center;
       height: 100%;
-      .img {
+      & > div {
         width: 60%;
         height: 0;
         padding-bottom: 60%;
         border-radius: 50%;
-        background-color: rgb(82, 86, 89);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -69,6 +68,15 @@
           img {
             width: 100%;
           }
+        }
+        &.gray {
+          background-color: rgb(82, 86, 89);
+        }
+        &.green {
+          background-color: #55d247;
+        }
+        &.red {
+          background-color: #c02f28;
         }
       }
     }
@@ -170,6 +178,7 @@
                 color: white;
                 border: 1px solid #1e83ff;
                 font-size: 28px;
+                cursor: pointer;
               }
             }
           }
@@ -215,7 +224,7 @@
       .avatar {
         width: 100%;
         height: 140px;
-        .img {
+        & > div {
           width: 30%;
           padding-bottom: 30%;
         }
