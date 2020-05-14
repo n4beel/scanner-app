@@ -1,0 +1,271 @@
+.Main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .info {
+    display: flex;
+    border-bottom: 1px solid black;
+    padding: 30px 50px;
+    .data {
+      width: 30%;
+      display: flex;
+      margin-top: 40px;
+      div {
+        p {
+          font-size: 32px;
+          margin-bottom: 30px;
+        }
+        &.value {
+          margin-left: 10px;
+        }
+      }
+    }
+    .chart {
+      flex-grow: 1;
+      .heading {
+        font-size: 28px;
+        text-align: center;
+        color: #6b6b6b;
+      }
+    }
+  }
+  .action {
+    flex-grow: 1;
+    display: flex;
+    .error {
+      height: 60px;
+      padding: 6px;
+      position: absolute;
+      width: calc(100% - 12px);
+      & > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p {
+          font-size: 32px;
+          color: red;
+        }
+      }
+    }
+    .avatar {
+      width: 38%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      .img {
+        width: 60%;
+        height: 0;
+        padding-bottom: 60%;
+        border-radius: 50%;
+        background-color: rgb(82, 86, 89);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .img-cont {
+          width: 64%;
+          margin-top: 15%;
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .control {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+
+      .control-center {
+        flex-grow: 1;
+        .loading {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          p {
+            font-size: 32px;
+            &.message {
+              margin-bottom: 40px;
+            }
+          }
+        }
+        .form {
+          margin-top: 66px;
+          height: calc(100% - 66px);
+          display: flex;
+          flex-direction: column;
+          .checks {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .checks-cont {
+              display: flex;
+              div {
+                p {
+                  font-size: 32px;
+                  margin-bottom: 30px;
+                }
+                &.value {
+                  margin-left: 72px;
+                  .checkbox {
+                    margin-bottom: 30px;
+
+                    input#wearingGear,
+                    input#isEmployee {
+                      position: absolute;
+                      opacity: 0;
+
+                      &:checked + label svg path {
+                        stroke-dashoffset: 0;
+                      }
+
+                      &:focus + label {
+                        transform: scale(1.03);
+                      }
+                    }
+
+                    #wearingGear + label,
+                    #isEmployee + label {
+                      display: block;
+                      border: 4px solid #000;
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 10px;
+                      cursor: pointer;
+                      // transition: all 0.2s ease;
+                      padding: 4px;
+                      svg {
+                        pointer-events: none;
+                        path {
+                          fill: none;
+                          stroke: #000;
+                          stroke-width: 16px;
+                          stroke-linecap: round;
+                          stroke-linejoin: round;
+                          stroke-dasharray: 100;
+                          stroke-dashoffset: 101;
+                          transition: all 350ms cubic-bezier(1, 0, 0.37, 0.91);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .buttons {
+            height: 100px;
+            display: flex;
+            div {
+              width: 33%;
+              button {
+                width: calc(100% - 30px);
+                background-color: #57a1fb;
+                height: 70px;
+                margin-top: 15px;
+                border-radius: 8px;
+                color: white;
+                border: 1px solid #1e83ff;
+                font-size: 28px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .info {
+      display: flex;
+      padding: 20px;
+      flex-direction: column-reverse;
+      .data {
+        width: 100%;
+        display: flex;
+        margin-top: 0;
+        flex-direction: column-reverse;
+        div {
+          display: flex;
+          justify-content: space-around;
+          p {
+            font-size: 14px;
+            margin-bottom: 10px;
+          }
+          &.value {
+            margin-left: 0;
+          }
+        }
+      }
+      .chart {
+        .heading {
+          font-size: 22px;
+        }
+      }
+    }
+    .action {
+      flex-direction: column;
+      .error {
+        top: 0;
+        background-color: white;
+      }
+      .avatar {
+        width: 100%;
+        height: 140px;
+        .img {
+          width: 30%;
+          padding-bottom: 30%;
+        }
+      }
+      .control {
+        .control-center {
+          .loading {
+            p {
+              text-align: center;
+            }
+          }
+          .form {
+            margin-top: 10px;
+            height: auto;
+            .checks {
+              .checks-cont {
+                justify-content: center;
+                div {
+                  p {
+                    font-size: 24px;
+                    margin-bottom: 18px;
+                  }
+                  &.value {
+                    margin-left: 72px;
+                    .checkbox {
+                      margin-bottom: 16px;
+
+                      #wearingGear + label,
+                      #isEmployee + label {
+                        width: 30px;
+                        height: 30px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .buttons {
+              justify-content: center;
+              div {
+                text-align: center;
+                button {
+                  height: 50px;
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
